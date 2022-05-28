@@ -10,19 +10,19 @@ events = []
 
 
 def copy_event(event):
-  print(list(event))
-  pass
+  #print(list(event))
   subprocess.call(list(event))
 
 
 def main():
   src_path = os.getcwd() + src
+  dest_path = os.getcwd() + dest
 
   for root, dirs, files in os.walk(src_path, topdown=False):
     for name in files:
       _src = os.path.join(root, name)
       _dest = _src.replace(src, dest)
-      events.append( ("rsync", "-arq", _src, _dest) )
+      events.append( ("rsync", "-arq", _src, dest_path) )
 
   print(events)
   with Pool() as p:
@@ -31,4 +31,6 @@ def main():
 
 if __name__ == "__main__":
   main()
+
+
 
