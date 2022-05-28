@@ -19,12 +19,7 @@ def main():
   src_path = os.getcwd() + src
 
   for root, dirs, files in os.walk(src_path, topdown=False):
-    print(root, dirs, files)
     for name in files:
-      _src = os.path.join(root, name)
-      _dest = _src.replace(src, dest)
-      events.append( ("rsync", "-arq", _src, _dest) )
-    for name in dirs:
       _src = os.path.join(root, name)
       _dest = _src.replace(src, dest)
       events.append( ("rsync", "-arq", _src, _dest) )
