@@ -15,14 +15,16 @@ def copy_event(event):
 
 
 def main():
-  src_path = os.getcwd() + src
-  dest_path = os.getcwd() + dest
+  src_path = os.path.expanduser('~') + src
+  dest_path = os.path.expanduser('~') + dest
 
-  for root, dirs, files in os.walk(src_path, topdown=False):
-    for name in files:
-      _src = os.path.join(root, name)
-      _dest = _src.replace(src, dest)
-      events.append( ("rsync", "-arq", _src, dest_path) )
+  print(src_path, dest_path)
+  for root, dirs, files in os.walk(src_path, topdown=True):
+    for name in dirs:
+      if name:
+        _src = os.path.join(root, name)
+        _dest = _src.replace(src, dest)
+        events.append( ("rsync", "-arnv", _src, dest_path) )
 
   print(events)
   with Pool() as p:
